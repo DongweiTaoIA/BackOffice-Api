@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="BackOffice.Api/BackOffice.Api.csproj" />
+  <Project Path="BackOffice.Application/BackOffice.Application.csproj" />
+  <Project Path="BackOffice.Domain/BackOffice.Domain.csproj" />
+  <Project Path="BackOffice.Infrastructure/BackOffice.Infrastructure.csproj" />
+  <Project Path="BackOffice.IntegrationTests/BackOffice.IntegrationTests.csproj" />
+  <Project Path="BackOffice.UnitTests/BackOffice.UnitTests.csproj" />
+</Solution>

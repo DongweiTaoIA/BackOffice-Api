@@ -1,0 +1,738 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "net10.0",
+    "targetDisplayName": ".NETCoreApp,Version=v10.0"
+  },
+  "analysisStartTime": "2026-05-23T15:53:11.3710071Z",
+  "analysisEndTime": "2026-05-23T15:53:13.4225236Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 6,
+      "issues": 4,
+      "incidents": 20,
+      "effort": 20
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 7,
+        "Optional": 0,
+        "Potential": 13,
+        "Information": 0
+      },
+      "category": {
+        "NuGet": 3,
+        "Project": 6,
+        "Api": 11
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "BackOffice.Api\\BackOffice.Api.csproj",
+      "startingProject": true,
+      "issues": 4,
+      "storyPoints": 14,
+      "properties": {
+        "appName": "BackOffice.Api",
+        "projectKind": "AspNetCore",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 9,
+        "numberOfCodeFiles": 7,
+        "linesTotal": 492,
+        "linesOfCode": 456,
+        "totalApiScanned": 680,
+        "minLinesOfCodeToChange": 11,
+        "maxLinesOfCodeToChange": 11
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "b83ef99e-d0fa-49b7-9c52-51f6993436e2",
+          "ruleId": "NuGet.0002",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.AspNetCore.OpenApi, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.8",
+              "protected": "Microsoft.AspNetCore.OpenApi, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.8"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\BackOffice.Api.csproj",
+            "snippet": "Microsoft.AspNetCore.OpenApi, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.8",
+            "protectedSnippet": "Microsoft.AspNetCore.OpenApi, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.OpenApi, and replace with new package Microsoft.AspNetCore.OpenApi 10.0.8",
+            "label": "Microsoft.AspNetCore.OpenApi 9.0.15",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.OpenApi",
+              "PackageVersion": "9.0.15",
+              "PackageNewVersion": "10.0.8",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "b3b05310-ecad-4e3a-91d3-f2cceca1edd8",
+          "ruleId": "NuGet.0002",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.AspNetCore.SignalR, 1.2.9\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.SignalR, and replace with new package Microsoft.AspNetCore.SignalR.Client 10.0.8",
+              "protected": "Microsoft.AspNetCore.SignalR, 1.2.9\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.SignalR, and replace with new package Microsoft.AspNetCore.SignalR.Client 10.0.8"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\BackOffice.Api.csproj",
+            "snippet": "Microsoft.AspNetCore.SignalR, 1.2.9\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.SignalR, and replace with new package Microsoft.AspNetCore.SignalR.Client 10.0.8",
+            "protectedSnippet": "Microsoft.AspNetCore.SignalR, 1.2.9\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.SignalR, and replace with new package Microsoft.AspNetCore.SignalR.Client 10.0.8",
+            "label": "Microsoft.AspNetCore.SignalR 1.2.9",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.SignalR",
+              "PackageVersion": "1.2.9",
+              "PackageNewVersion": null,
+              "PackageReplacements": "Replace with new package Microsoft.AspNetCore.SignalR.Client=10.0.8"
+            }
+          }
+        },
+        {
+          "incidentId": "bd9cef01-970e-4b5c-a661-29eaa3134643",
+          "ruleId": "Project.0002",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\BackOffice.Api.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        },
+        {
+          "incidentId": "104c790b-14a1-48d9-9d19-71890202535e",
+          "ruleId": "Api.0001",
+          "description": "Breaking change: DynamicallyAccessedMembers annotation removed from trim-unsafe configuration APIs ",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "var corsOrigins = builder.Configuration.GetSection(\u0022Cors:AllowedOrigins\u0022).Get\u003Cstring[]\u003E()\r\n    ?? [\u0022http://localhost:5173\u0022, \u0022https://localhost:5173\u0022];",
+              "protected": "M:Microsoft.Extensions.Configuration.ConfigurationBinder.Get\u0060\u00601(Microsoft.Extensions.Configuration.IConfiguration)"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "var corsOrigins = builder.Configuration.GetSection(\u0022Cors:AllowedOrigins\u0022).Get\u003Cstring[]\u003E()\r\n    ?? [\u0022http://localhost:5173\u0022, \u0022https://localhost:5173\u0022];",
+            "protectedSnippet": "M:Microsoft.Extensions.Configuration.ConfigurationBinder.Get\u0060\u00601(Microsoft.Extensions.Configuration.IConfiguration)",
+            "label": "M:Microsoft.Extensions.Configuration.ConfigurationBinder.Get\u0060\u00601(Microsoft.Extensions.Configuration.IConfiguration)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://github.com/dotnet/docs/blob/main/docs/core/compatibility/extensions/10.0/dynamically-accessed-members-configuration.md",
+                "isCustom": false
+              }
+            ],
+            "line": 45,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "e7e431ab-ae32-4ec2-9e71-d7c8621be812",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "context.Token = accessToken;",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.MessageReceivedContext.Token"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "context.Token = accessToken;",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.MessageReceivedContext.Token",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.MessageReceivedContext.Token",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 37,
+            "column": 16
+          }
+        },
+        {
+          "incidentId": "5fc593a1-dad1-477f-9844-50492c805b00",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnMessageReceived"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnMessageReceived",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.OnMessageReceived",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 29,
+            "column": 4
+          }
+        },
+        {
+          "incidentId": "ed8607ed-3ecb-4e3b-9ab7-eef37b01e8eb",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+              "protected": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+            "protectedSnippet": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents",
+            "label": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 29,
+            "column": 4
+          }
+        },
+        {
+          "incidentId": "96a1ae73-05d0-490b-9dd5-421acdbeea9e",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+              "protected": "M:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.#ctor"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+            "protectedSnippet": "M:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.#ctor",
+            "label": "M:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents.#ctor",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 29,
+            "column": 4
+          }
+        },
+        {
+          "incidentId": "b5c3aa55-91bf-4e82-81ad-9b13e079afc6",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+              "protected": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+            "protectedSnippet": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents",
+            "label": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 29,
+            "column": 4
+          }
+        },
+        {
+          "incidentId": "e63bd54d-bb53-4246-844a-2306a66a8981",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+              "protected": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Events"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Events",
+            "label": "P:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions.Events",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 29,
+            "column": 4
+          }
+        },
+        {
+          "incidentId": "b3d18ea8-f060-4321-97c9-db1983c9da18",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.Configure\u003CJwtBearerOptions\u003E(JwtBearerDefaults.AuthenticationScheme, options =\u003E\r\n{\r\n    options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };\r\n});",
+              "protected": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "builder.Services.Configure\u003CJwtBearerOptions\u003E(JwtBearerDefaults.AuthenticationScheme, options =\u003E\r\n{\r\n    options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };\r\n});",
+            "protectedSnippet": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults",
+            "label": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 27,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "38c66d26-b3a4-4e83-846b-c81fe241bd96",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.Configure\u003CJwtBearerOptions\u003E(JwtBearerDefaults.AuthenticationScheme, options =\u003E\r\n{\r\n    options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };\r\n});",
+              "protected": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "builder.Services.Configure\u003CJwtBearerOptions\u003E(JwtBearerDefaults.AuthenticationScheme, options =\u003E\r\n{\r\n    options.Events = new JwtBearerEvents\r\n    {\r\n        OnMessageReceived = context =\u003E\r\n        {\r\n            var accessToken = context.Request.Query[\u0022access_token\u0022];\r\n            var path = context.HttpContext.Request.Path;\r\n            if (!string.IsNullOrEmpty(accessToken) \u0026\u0026 path.StartsWithSegments(\u0022/hubs\u0022))\r\n            {\r\n                context.Token = accessToken;\r\n            }\r\n            return Task.CompletedTask;\r\n        }\r\n    };\r\n});",
+            "protectedSnippet": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme",
+            "label": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 27,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "43e0de26-2164-4957-bf11-d7b7f663938a",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(\u0022AzureAd\u0022));",
+              "protected": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(\u0022AzureAd\u0022));",
+            "protectedSnippet": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults",
+            "label": "T:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 23,
+            "column": 0
+          }
+        },
+        {
+          "incidentId": "f61c204e-f412-4902-b98d-a3e28378e42d",
+          "ruleId": "Api.0002",
+          "description": "API is available in package Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6. Add package reference to Microsoft.AspNetCore.Authentication.JwtBearer, 8.0.6",
+          "projectPath": "BackOffice.Api\\BackOffice.Api.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(\u0022AzureAd\u0022));",
+              "protected": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme"
+            },
+            "kind": "File",
+            "path": "BackOffice.Api\\Program.cs",
+            "snippet": "builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)\r\n    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(\u0022AzureAd\u0022));",
+            "protectedSnippet": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme",
+            "label": "F:Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+              "PackageNewVersion": "8.0.6"
+            },
+            "line": 23,
+            "column": 0
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "BackOffice.Application\\BackOffice.Application.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "BackOffice.Application",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 0,
+        "numberOfCodeFiles": 0,
+        "linesTotal": 0,
+        "linesOfCode": 0,
+        "totalApiScanned": 0,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "077af5e6-89e4-40ad-9ea1-6c1e7d4ec19a",
+          "ruleId": "Project.0002",
+          "projectPath": "BackOffice.Application\\BackOffice.Application.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "BackOffice.Application\\BackOffice.Application.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "BackOffice.Domain\\BackOffice.Domain.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "BackOffice.Domain",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 0,
+        "numberOfCodeFiles": 0,
+        "linesTotal": 0,
+        "linesOfCode": 0,
+        "totalApiScanned": 0,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "815d1aaa-3f94-4ed9-a63b-89422773156c",
+          "ruleId": "Project.0002",
+          "projectPath": "BackOffice.Domain\\BackOffice.Domain.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "BackOffice.Domain\\BackOffice.Domain.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "BackOffice.Infrastructure",
+        "projectKind": "ClassLibrary",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 0,
+        "numberOfCodeFiles": 0,
+        "linesTotal": 0,
+        "linesOfCode": 0,
+        "totalApiScanned": 0,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "b2102d1a-bba5-4be7-9685-115ac069e5ba",
+          "ruleId": "Project.0002",
+          "projectPath": "BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "BackOffice.Infrastructure\\BackOffice.Infrastructure.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "BackOffice.IntegrationTests\\BackOffice.IntegrationTests.csproj",
+      "startingProject": true,
+      "issues": 2,
+      "storyPoints": 2,
+      "properties": {
+        "appName": "BackOffice.IntegrationTests",
+        "projectKind": "DotNetCoreApp",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 0,
+        "linesTotal": 1789,
+        "linesOfCode": 0,
+        "totalApiScanned": 26,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "5f95718f-e7b7-4f84-b0f0-e8297e383514",
+          "ruleId": "NuGet.0002",
+          "projectPath": "BackOffice.IntegrationTests\\BackOffice.IntegrationTests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Microsoft.AspNetCore.Mvc.Testing, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Mvc.Testing, and replace with new package Microsoft.AspNetCore.Mvc.Testing 10.0.8",
+              "protected": "Microsoft.AspNetCore.Mvc.Testing, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Mvc.Testing, and replace with new package Microsoft.AspNetCore.Mvc.Testing 10.0.8"
+            },
+            "kind": "File",
+            "path": "BackOffice.IntegrationTests\\BackOffice.IntegrationTests.csproj",
+            "snippet": "Microsoft.AspNetCore.Mvc.Testing, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Mvc.Testing, and replace with new package Microsoft.AspNetCore.Mvc.Testing 10.0.8",
+            "protectedSnippet": "Microsoft.AspNetCore.Mvc.Testing, 9.0.15\n\nRecommendation:\n\nRemove Microsoft.AspNetCore.Mvc.Testing, and replace with new package Microsoft.AspNetCore.Mvc.Testing 10.0.8",
+            "label": "Microsoft.AspNetCore.Mvc.Testing 9.0.15",
+            "properties": {
+              "PackageId": "Microsoft.AspNetCore.Mvc.Testing",
+              "PackageVersion": "9.0.15",
+              "PackageNewVersion": "10.0.8",
+              "PackageReplacements": null
+            }
+          }
+        },
+        {
+          "incidentId": "ca62ec33-db64-4ce0-a64e-cf7c151600dc",
+          "ruleId": "Project.0002",
+          "projectPath": "BackOffice.IntegrationTests\\BackOffice.IntegrationTests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "BackOffice.IntegrationTests\\BackOffice.IntegrationTests.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    },
+    {
+      "path": "BackOffice.UnitTests\\BackOffice.UnitTests.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "properties": {
+        "appName": "BackOffice.UnitTests",
+        "projectKind": "DotNetCoreApp",
+        "frameworks": [
+          "net9.0"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ],
+        "isSdkStyle": true,
+        "numberOfFiles": 2,
+        "numberOfCodeFiles": 0,
+        "linesTotal": 1789,
+        "linesOfCode": 0,
+        "totalApiScanned": 26,
+        "minLinesOfCodeToChange": 0,
+        "maxLinesOfCodeToChange": 0
+      },
+      "ruleInstances": [
+        {
+          "incidentId": "3abb0202-4602-4636-a41d-513e0eb106a6",
+          "ruleId": "Project.0002",
+          "projectPath": "BackOffice.UnitTests\\BackOffice.UnitTests.csproj",
+          "state": "Active",
+          "location": {
+            "snippetModel": {
+              "unrestricted": "Current target framework: net9.0\nRecommended target framework: net10.0",
+              "protected": "Current target framework: net9.0\nRecommended target framework: net10.0"
+            },
+            "kind": "File",
+            "path": "BackOffice.UnitTests\\BackOffice.UnitTests.csproj",
+            "snippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "protectedSnippet": "Current target framework: net9.0\nRecommended target framework: net10.0",
+            "properties": {
+              "CurrentTargetFramework": "net9.0",
+              "RecommendedTargetFramework": "net10.0"
+            }
+          }
+        }
+      ],
+      "features": []
+    }
+  ],
+  "rules": {
+    "NuGet.0002": {
+      "id": "NuGet.0002",
+      "isFeature": false,
+      "description": "NuGet package upgrade is recommended for selected target framework.\n\nStandard .NET packages are recommended to have versions matching version of .NET that project targets.\n\nSome other packages also are known to work better for selected target frameworks.",
+      "label": "NuGet package upgrade is recommended",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262530",
+          "isCustom": false
+        }
+      ]
+    },
+    "Project.0002": {
+      "id": "Project.0002",
+      "isFeature": false,
+      "description": "Project\u0027s target framework(s) needs to be changed to the new target framework that you selected for this upgrade.\n\nDuring upgrade target framework will be adjusted to corresponding platform when applicable. In some cases project would result in multiple target frameworks after the upgrade if it was using features that now have their own platforms in modern .NET frameworks (windows, iOS, Android etc).",
+      "label": "Project\u0027s target framework(s) needs to be changed",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Overview of porting from .NET Framework to .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET project SDKs",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0001": {
+      "id": "Api.0001",
+      "isFeature": false,
+      "description": "API is binary incompatible for selected .NET version: affects existing binaries, often requiring recompilation, because the API has changed in a way that prevents older binaries from loading or executing.",
+      "label": "Binary incompatible for selected .NET version",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0002": {
+      "id": "Api.0002",
+      "isFeature": false,
+      "description": "API is source incompatible for selected .NET version: requires code changes to compile successfully when targeting a new version, such as removing obsolete APIs or changing method signatures.",
+      "label": "Source incompatible for selected .NET version",
+      "severity": "Potential",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}
