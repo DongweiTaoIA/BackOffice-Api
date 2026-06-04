@@ -1,6 +1,6 @@
-namespace BackOffice.Api.Models;
+namespace BackOffice.Domain.Models;
 
-public class ConversationDto
+public class ChatDto
 {
     public string Id { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
@@ -12,11 +12,19 @@ public class ConversationDto
 public class MessageDto
 {
     public string Id { get; set; } = string.Empty;
-    public string ConversationId { get; set; } = string.Empty;
+    public string ChatId { get; set; } = string.Empty;
     public string Role { get; set; } = "user"; // "user" | "assistant"
     public string Content { get; set; } = string.Empty;
     public DateTime Timestamp { get; set; }
     public EligibilityResult? EligibilityResult { get; set; }
+    public List<SuggestedAction>? Suggestions { get; set; }
+}
+
+public class SuggestedAction
+{
+    public string Label { get; set; } = string.Empty;
+    public string Action { get; set; } = string.Empty;
+    public string? Payload { get; set; }
 }
 
 public class EligibilityResult
@@ -40,10 +48,10 @@ public class ProgramInfo
 public class SendMessageRequest
 {
     public string Content { get; set; } = string.Empty;
-    public string? ConversationId { get; set; }
+    public string? ChatId { get; set; }
 }
 
-public class CreateConversationRequest
+public class CreateChatRequest
 {
     public string Title { get; set; } = "New Chat";
 }
@@ -80,6 +88,6 @@ public class AuditLogDto
 public class ReportBugRequest
 {
     public string Description { get; set; } = string.Empty;
-    public string? ConversationId { get; set; }
+    public string? ChatId { get; set; }
     public string? MessageId { get; set; }
 }

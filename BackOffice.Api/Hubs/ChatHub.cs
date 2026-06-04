@@ -1,36 +1,85 @@
+using BackOffice.Domain.Interfaces;
+using BackOffice.Domain.Models;
 using Microsoft.AspNetCore.SignalR;
 
 namespace BackOffice.Api.Hubs;
 
-public class ChatHub : Hub
+public partial class ChatHub(
+    ILogger<ChatHub> logger,
+    IChatStore chatStore,
+    IChatService chatService) : Hub
 {
-    private readonly ILogger<ChatHub> _logger;
-
-    public ChatHub(ILogger<ChatHub> logger)
-    {
-        _logger = logger;
-    }
-
     public override async Task OnConnectedAsync()
     {
-        _logger.LogInformation("Client connected: {ConnectionId}", Context.ConnectionId);
+        LogClientConnected(Context.ConnectionId);
         await base.OnConnectedAsync();
     }
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        _logger.LogInformation("Client disconnected: {ConnectionId}", Context.ConnectionId);
+        if (exception is not null)
+            LogClientDisconnectedWithError(exception, Context.ConnectionId);
+        else
+            LogClientDisconnected(Context.ConnectionId);
+
         await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task JoinConversation(string conversationId)
+    public async Task JoinChat(string chatId)
     {
-        await Groups.AddToGroupAsync(Context.ConnectionId, conversationId);
-        _logger.LogInformation("Client {ConnectionId} joined conversation {ConversationId}", Context.ConnectionId, conversationId);
+        if (string.IsNullOrWhiteSpace(chatId))
+            throw new HubException("Chat ID is required.");
+
+        await Groups.AddToGroupAsync(Context.ConnectionId, chatId);
+        LogClientJoinedChat(Context.ConnectionId, chatId);
     }
 
-    public async Task LeaveConversation(string conversationId)
+    public async Task LeaveChat(string chatId)
     {
-        await Groups.RemoveFromGroupAsync(Context.ConnectionId, conversationId);
+        if (string.IsNullOrWhiteSpace(chatId))
+            throw new HubException("Chat ID is required.");
+
+        await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId);
+        LogClientLeftChat(Context.ConnectionId, chatId);
     }
+
+    public async Task SendMessage(string chatId, string content)
+    {
+        if (string.IsNullOrWhiteSpace(chatId))
+            throw new HubException("Chat ID is required.");
+        if (string.IsNullOrWhiteSpace(content))
+            throw new HubException("Message content is required.");
+
+        // Save user message
+        var userMessage = new MessageDto
+        {
+            Id = Guid.NewGuid().ToString(),
+            ChatId = chatId,
+            Role = "user",
+            Content = content,
+            Timestamp = DateTime.UtcNow
+        };
+        await chatStore.AddMessageAsync(chatId, userMessage);
+        await Clients.Group(chatId).SendAsync("ReceiveMessage", userMessage);
+
+        // Process and send assistant response
+        var assistantMessage = await chatService.ProcessMessageAsync(chatId, content);
+        await chatStore.AddMessageAsync(chatId, assistantMessage);
+        await Clients.Group(chatId).SendAsync("ReceiveMessage", assistantMessage);
+    }
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Client connected: {ConnectionId}")]
+    private partial void LogClientConnected(string connectionId);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Client disconnected: {ConnectionId}")]
+    private partial void LogClientDisconnected(string connectionId);
+
+    [LoggerMessage(Level = LogLevel.Warning, Message = "Client disconnected with error: {ConnectionId}")]
+    private partial void LogClientDisconnectedWithError(Exception exception, string connectionId);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Client {ConnectionId} joined chat {ChatId}")]
+    private partial void LogClientJoinedChat(string connectionId, string chatId);
+
+    [LoggerMessage(Level = LogLevel.Information, Message = "Client {ConnectionId} left chat {ChatId}")]
+    private partial void LogClientLeftChat(string connectionId, string chatId);
 }
