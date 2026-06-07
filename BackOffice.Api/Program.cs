@@ -9,6 +9,7 @@ using BackOffice.Application.Services.Intents;
 using BackOffice.Infrastructure.Services;
 using BackOffice.Infrastructure.BackOfficeAdminData;
 using BackOffice.Infrastructure.UnifiData;
+using MongoDB.Driver;
 using Serilog;
 using Serilog.Sinks.PostgreSQL;
 using NpgsqlTypes;
@@ -99,6 +100,13 @@ builder.Services.AddSingleton<IChatIntentHandler, FallbackIntentHandler>();
 
 builder.Services.AddSingleton<IChatService, ChatService>();
 builder.Services.AddScoped<IChatStore, ChatStore>();
+
+// MongoDB for Support Tickets
+var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDB") ?? "mongodb://localhost:27017";
+var mongoDatabaseName = builder.Configuration["MongoDB:DatabaseName"] ?? "backoffice";
+builder.Services.AddSingleton<IMongoClient>(new MongoClient(mongoConnectionString));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IMongoClient>().GetDatabase(mongoDatabaseName));
+builder.Services.AddSingleton<ISupportTicketStore, SupportTicketStore>();
 
 var app = builder.Build();
 
