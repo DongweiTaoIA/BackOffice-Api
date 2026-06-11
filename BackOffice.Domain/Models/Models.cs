@@ -45,6 +45,66 @@ public class ProgramInfo
     public string Status { get; set; } = "Active";
 }
 
+public class EligibilityQuery
+{
+    public string? DealerId { get; set; }
+    public string? DealerName { get; set; }
+    public string? ProductId { get; set; }
+    public string? ProductName { get; set; }
+    public string? ProgramId { get; set; }
+    public string? ProgramName { get; set; }
+}
+
+public class ActivateRequest
+{
+    public string DealerId { get; set; } = string.Empty;
+    public string ProgramId { get; set; } = string.Empty;
+    public string? EffectiveDate { get; set; }
+}
+
+public class DeactivateRequest
+{
+    public string DealerId { get; set; } = string.Empty;
+    public string ProgramId { get; set; } = string.Empty;
+    public string ExpiryDate { get; set; } = string.Empty;
+}
+
+public class ProgramActionResult
+{
+    public bool Success { get; set; }
+    public string DealerCode { get; set; } = string.Empty;
+    public string DealerName { get; set; } = string.Empty;
+    public string ProgramId { get; set; } = string.Empty;
+    public string ProgramName { get; set; } = string.Empty;
+    public string Product { get; set; } = string.Empty;
+    public string Action { get; set; } = string.Empty;
+    public string EffectiveDate { get; set; } = string.Empty;
+    public string Summary { get; set; } = string.Empty;
+}
+
+public class CancellationEligibilityResult
+{
+    public bool IsEligible { get; set; }
+    public string ContractNumber { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+    public string Product { get; set; } = string.Empty;
+    public string EffectiveDate { get; set; } = string.Empty;
+    public string ExpiryDate { get; set; } = string.Empty;
+    public string Reason { get; set; } = string.Empty;
+    public decimal? RefundAmount { get; set; }
+    public string RefundType { get; set; } = string.Empty;
+    public string Summary { get; set; } = string.Empty;
+}
+
+public class MaxMarkupResult
+{
+    public bool Found { get; set; }
+    public string ProgramId { get; set; } = string.Empty;
+    public string ProgramName { get; set; } = string.Empty;
+    public decimal MaxMarkup { get; set; }
+    public string Summary { get; set; } = string.Empty;
+}
+
 public class SendMessageRequest
 {
     public string Content { get; set; } = string.Empty;

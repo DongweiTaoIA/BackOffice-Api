@@ -4,54 +4,58 @@ namespace BackOffice.Application.Services;
 
 public class ProductRegistry : IProductRegistry
 {
+    // Maps user input aliases to cfProduct.ProductId codes (CHAR(2))
     private static readonly Dictionary<string, string> ExactAliases = new(StringComparer.OrdinalIgnoreCase)
     {
         // Dealer Warranty
-        ["dw"] = "Dealer Warranty",
-        ["dealer warranty"] = "Dealer Warranty",
-        ["dealer war"] = "Dealer Warranty",
+        ["dw"] = "DW",
+        ["dealer warranty"] = "DW",
+        ["dealer war"] = "DW",
 
         // Extended Warranty
-        ["ew"] = "Extended Warranty",
-        ["extended warranty"] = "Extended Warranty",
-        ["ext warranty"] = "Extended Warranty",
-        ["extended"] = "Extended Warranty",
-        ["au220"] = "Extended Warranty",
-        ["au 220"] = "Extended Warranty",
+        ["ew"] = "EW",
+        ["extended warranty"] = "EW",
+        ["ext warranty"] = "EW",
+        ["extended"] = "EW",
+        ["au220"] = "EW",
+        ["au 220"] = "EW",
+        ["retail wearable parts"] = "EW",
 
         // GAP Premium
-        ["gap"] = "GAP Premium",
-        ["gap premium"] = "GAP Premium",
-        ["gap insurance"] = "GAP Premium",
+        ["gp"] = "GP",
+        ["gap"] = "GP",
+        ["gap premium"] = "GP",
+        ["gap insurance"] = "GP",
 
         // Replacement Warranty
-        ["rw"] = "Replacement Warranty",
-        ["replacement warranty"] = "Replacement Warranty",
-        ["replacement"] = "Replacement Warranty",
+        ["rw"] = "RW",
+        ["replacement warranty"] = "RW",
+        ["replacement"] = "RW",
 
-        // PPM (Pre-Paid Maintenance)
-        ["ppm"] = "Pre-Paid Maintenance",
-        ["pre-paid maintenance"] = "Pre-Paid Maintenance",
-        ["prepaid maintenance"] = "Pre-Paid Maintenance",
-        ["maintenance"] = "Pre-Paid Maintenance",
+        // Pre-Paid Maintenance
+        ["pm"] = "PM",
+        ["ppm"] = "PM",
+        ["pre-paid maintenance"] = "PM",
+        ["prepaid maintenance"] = "PM",
+        ["maintenance"] = "PM",
 
         // Tire & Rim
-        ["tr"] = "Tire & Rim",
-        ["tire and rim"] = "Tire & Rim",
-        ["tire & rim"] = "Tire & Rim",
-        ["tire rim"] = "Tire & Rim",
+        ["tr"] = "TR",
+        ["tire and rim"] = "TR",
+        ["tire & rim"] = "TR",
+        ["tire rim"] = "TR",
     };
 
     private static readonly Dictionary<string, string> FuzzyAliases = new(StringComparer.OrdinalIgnoreCase)
     {
-        ["dealer warrenty"] = "Dealer Warranty",
-        ["dealer warenty"] = "Dealer Warranty",
-        ["dealer waranty"] = "Dealer Warranty",
-        ["extended warrenty"] = "Extended Warranty",
-        ["extended warenty"] = "Extended Warranty",
-        ["replacement warrenty"] = "Replacement Warranty",
-        ["gap premum"] = "GAP Premium",
-        ["gap premuim"] = "GAP Premium",
+        ["dealer warrenty"] = "DW",
+        ["dealer warenty"] = "DW",
+        ["dealer waranty"] = "DW",
+        ["extended warrenty"] = "EW",
+        ["extended warenty"] = "EW",
+        ["replacement warrenty"] = "RW",
+        ["gap premum"] = "GP",
+        ["gap premuim"] = "GP",
     };
 
     public string? ResolveProduct(string input)
@@ -84,11 +88,11 @@ public class ProductRegistry : IProductRegistry
 
     public List<string> GetAllProducts() =>
     [
-        "Dealer Warranty",
-        "Extended Warranty",
-        "GAP Premium",
-        "Replacement Warranty",
-        "Pre-Paid Maintenance",
-        "Tire & Rim"
+        "DW",
+        "EW",
+        "GP",
+        "RW",
+        "PM",
+        "TR"
     ];
 }

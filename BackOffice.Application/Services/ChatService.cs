@@ -70,12 +70,81 @@ public class ChatService : IChatService
         };
     }
 
-    private ChatContext BuildContext(string message) => new()
+    private ChatContext BuildContext(string message)
     {
-        Message = message,
-        DealerCode = ExtractDealerCode(message),
-        Product = _productRegistry.ResolveProduct(ExtractProductToken(message))
-    };
+        var dealerCode = ExtractDealerCode(message);
+        var productToken = ExtractProductToken(message);
+        var resolvedProduct = _productRegistry.ResolveProduct(productToken);
+
+        // Detect if the user specified a program (by code or name) after the product
+        string? programCode = null;
+
+        if (!string.IsNullOrEmpty(resolvedProduct))
+        {
+            // Try to extract program reference from the message
+            // Pattern: after the product shortcode (e.g., "EW"), remaining text may be a program name
+            var programRef = ExtractProgramRef(message, dealerCode, resolvedProduct);
+            if (!string.IsNullOrEmpty(programRef))
+            {
+                programCode = programRef;
+            }
+        }
+
+        return new()
+        {
+            Message = message,
+            DealerCode = dealerCode,
+            Product = resolvedProduct,
+            ProgramCode = programCode,
+        };
+    }
+
+    private static string? ExtractProgramRef(string message, string? dealerCode, string productId)
+    {
+        // Remove known parts from the message to find program name
+        var cleaned = message;
+
+        // Remove common intent words
+        string[] removeWords = ["can", "does", "is", "sell", "check", "eligible", "eligibility", "for", "the", "?"];
+        foreach (var word in removeWords)
+        {
+            cleaned = Regex.Replace(cleaned, $@"(?<![a-zA-Z]){Regex.Escape(word)}(?![a-zA-Z])", " ", RegexOptions.IgnoreCase);
+        }
+
+        // Remove dealer code
+        if (!string.IsNullOrEmpty(dealerCode))
+        {
+            cleaned = cleaned.Replace(dealerCode, " ", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // Remove product shortcode (standalone, e.g., "EW" but not part of a word)
+        cleaned = Regex.Replace(cleaned, $@"(?<![a-zA-Z]){Regex.Escape(productId)}(?![a-zA-Z])", " ", RegexOptions.IgnoreCase);
+
+        // Clean up whitespace
+        cleaned = Regex.Replace(cleaned, @"\s+", " ").Trim();
+
+        // If there's meaningful text left (at least 3 chars), it could be a program code or name
+        if (cleaned.Length >= 3)
+        {
+            return cleaned;
+        }
+
+        // Also check for explicit program codes like "AU220" in original message
+        var codeMatch = Regex.Match(message, @"[A-Za-z]{2}\d{2,3}");
+        if (codeMatch.Success)
+        {
+            var code = codeMatch.Value.ToUpperInvariant();
+            // Make sure it's not the dealer code
+            if (dealerCode == null || !code.Equals(dealerCode[..Math.Min(5, dealerCode.Length)], StringComparison.OrdinalIgnoreCase))
+            {
+                // And not the product code
+                if (!code.Equals(productId, StringComparison.OrdinalIgnoreCase))
+                    return code;
+            }
+        }
+
+        return null;
+    }
 
     private static string? ExtractDealerCode(string message)
     {

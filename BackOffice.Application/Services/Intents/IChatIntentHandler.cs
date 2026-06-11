@@ -16,6 +16,9 @@ public class ChatContext
 
     public string? DealerCode { get; init; }
     public string? Product { get; init; }
+
+    /// <summary>Specific program code (e.g., "AU220") if the user referenced one.</summary>
+    public string? ProgramCode { get; init; }
 }
 
 /// <summary>The structured response produced by an intent handler.</summary>

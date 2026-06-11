@@ -45,6 +45,19 @@ public class EligibilityIntentHandler : IChatIntentHandler
 
         if (!string.IsNullOrEmpty(dealerCode) && !string.IsNullOrEmpty(product))
         {
+            // If a specific program was identified, use the query overload for precise checking
+            if (!string.IsNullOrEmpty(context.ProgramCode))
+            {
+                var query = new EligibilityQuery
+                {
+                    DealerId = dealerCode,
+                    ProductId = product,
+                    ProgramName = context.ProgramCode,
+                };
+                var queryResult = await _dealerService.CheckEligibilityAsync(query);
+                return BuildResponse(queryResult);
+            }
+
             return await CheckEligibilityAsync(dealerCode, product);
         }
 
@@ -95,6 +108,13 @@ public class EligibilityIntentHandler : IChatIntentHandler
     private async Task<ChatResponse> CheckEligibilityAsync(string dealerCode, string product)
     {
         var result = await _dealerService.CheckEligibilityAsync(dealerCode, product);
+        return BuildResponse(result, dealerCode, product);
+    }
+
+    private static ChatResponse BuildResponse(EligibilityResult result, string? dealerCode = null, string? product = null)
+    {
+        dealerCode ??= result.DealerCode;
+        product ??= result.Product;
 
         List<SuggestedAction> suggestions;
         if (result.IsEligible)

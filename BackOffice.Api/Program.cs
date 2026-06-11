@@ -92,13 +92,13 @@ builder.Services.AddDbContext<BackOfficeAdminDbContext>(options =>
 builder.Services.AddDbContext<UnifiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UnifiDb")));
 builder.Services.AddSingleton<IProductRegistry, ProductRegistry>();
-builder.Services.AddSingleton<IDealerService, MockDealerService>();
+builder.Services.AddScoped<IDealerService, DealerService>();
 
 // Chat intent handlers � register new capabilities here. FallbackIntentHandler must be last.
-builder.Services.AddSingleton<IChatIntentHandler, EligibilityIntentHandler>();
-builder.Services.AddSingleton<IChatIntentHandler, FallbackIntentHandler>();
+builder.Services.AddScoped<IChatIntentHandler, EligibilityIntentHandler>();
+builder.Services.AddScoped<IChatIntentHandler, FallbackIntentHandler>();
 
-builder.Services.AddSingleton<IChatService, ChatService>();
+builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IChatStore, ChatStore>();
 
 // MongoDB for Support Tickets
