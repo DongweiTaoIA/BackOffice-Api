@@ -93,6 +93,7 @@ builder.Services.AddDbContext<UnifiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UnifiDb")));
 builder.Services.AddSingleton<IProductRegistry, ProductRegistry>();
 builder.Services.AddScoped<IDealerService, DealerService>();
+builder.Services.AddScoped<IContractService, ContractService>();
 
 // Chat intent handlers � register new capabilities here. FallbackIntentHandler must be last.
 builder.Services.AddScoped<IChatIntentHandler, EligibilityIntentHandler>();

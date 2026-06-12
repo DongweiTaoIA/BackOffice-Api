@@ -51,6 +51,38 @@ public class DmDealer
     [StringLength(2)]
     public string? ProvState { get; set; }
 
+    [Column("PostalZip")]
+    [StringLength(10)]
+    public string? PostalZip { get; set; }
+
+    [Column("PhoneNum")]
+    [StringLength(20)]
+    public string? PhoneNum { get; set; }
+
+    [Column("FaxNum")]
+    [StringLength(20)]
+    public string? FaxNum { get; set; }
+
+    [Column("WebPageUrl")]
+    [StringLength(255)]
+    public string? WebPageUrl { get; set; }
+
+    [Column("LegalName")]
+    [StringLength(100)]
+    public string? LegalName { get; set; }
+
+    [Column("OEM")]
+    [StringLength(2)]
+    public string? OEM { get; set; }
+
+    [Column("ProducerMake")]
+    [StringLength(2)]
+    public string? ProducerMake { get; set; }
+
+    [Column("ProducerClass")]
+    [StringLength(2)]
+    public string? ProducerClass { get; set; }
+
     [Column("IsDemoYN")]
     [StringLength(1)]
     public string IsDemoYN { get; set; } = "N";

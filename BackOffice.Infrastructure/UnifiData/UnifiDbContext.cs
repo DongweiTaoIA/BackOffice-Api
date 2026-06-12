@@ -10,6 +10,7 @@ public class UnifiDbContext : DbContext
     }
 
     public DbSet<DmDealer> Dealers => Set<DmDealer>();
+    public DbSet<DmContract> Contracts => Set<DmContract>();
     public DbSet<CfProgram> Programs => Set<CfProgram>();
     public DbSet<CfProduct> Products => Set<CfProduct>();
     public DbSet<EwDealerProgram> EwDealerPrograms => Set<EwDealerProgram>();
@@ -21,6 +22,15 @@ public class UnifiDbContext : DbContext
         {
             entity.ToTable("dmDealer");
             entity.HasKey(e => e.DealerId);
+        });
+
+        modelBuilder.Entity<DmContract>(entity =>
+        {
+            entity.ToTable("dmContract");
+            entity.HasKey(e => e.ContractKey);
+            entity.HasIndex(e => e.ContractNum);
+            entity.HasIndex(e => e.DealerId);
+            entity.Property(e => e.ComputedFinanceType).ValueGeneratedOnAddOrUpdate();
         });
 
         modelBuilder.Entity<CfProgram>(entity =>

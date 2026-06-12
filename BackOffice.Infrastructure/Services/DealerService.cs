@@ -460,4 +460,128 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
             Summary = $"The maximum markup for program {program.ProgramId} ({program.DescnEn}) is {maxMarkup.Value:F2}."
         };
     }
+
+    public async Task<List<DealerSearchResult>> SearchDealersAsync(string query)
+    {
+        var q = query.Trim();
+
+        var dbQuery = unifiDb.Dealers
+            .AsNoTracking()
+            .Where(d => d.IsDemoYN != "Y");
+
+        if (!string.IsNullOrEmpty(q))
+        {
+            var pattern = $"%{q}%";
+            dbQuery = dbQuery.Where(d =>
+                EF.Functions.Like(d.DealerId, pattern)
+                || EF.Functions.Like(d.DBAName, pattern)
+                || (d.City != null && EF.Functions.Like(d.City, pattern))
+                || (d.ProvState != null && EF.Functions.Like(d.ProvState, pattern)));
+        }
+
+        return await dbQuery
+            .OrderBy(d => d.DealerId)
+            .Take(20)
+            .Select(d => new DealerSearchResult
+            {
+                DealerId = d.DealerId,
+                DBAName = d.DBAName,
+                DealerStat = d.DealerStat,
+                City = d.City,
+                ProvState = d.ProvState,
+            })
+            .ToListAsync();
+    }
+
+    public async Task<DealerDetailsDto?> GetDealerDetailsAsync(string dealerCode)
+    {
+        return await unifiDb.Dealers
+            .AsNoTracking()
+            .Where(d => d.DealerId == dealerCode)
+            .Select(d => new DealerDetailsDto
+            {
+                DealerId = d.DealerId,
+                DBAName = d.DBAName,
+                LegalName = d.LegalName,
+                DealerStat = d.DealerStat,
+                DealerGroup = d.DealerGroup,
+                DealerCatg = d.DealerCatg,
+                City = d.City,
+                ProvState = d.ProvState,
+                PostalZip = d.PostalZip,
+                PhoneNum = d.PhoneNum,
+                FaxNum = d.FaxNum,
+                WebPageUrl = d.WebPageUrl,
+                TerritoryId = d.TerritoryId,
+                Language = d.Language,
+                OEM = d.OEM,
+                IsDealershipYN = d.IsDealershipYN,
+                IsBrokerYN = d.IsBrokerYN,
+                ProducerMake = d.ProducerMake,
+                ProducerClass = d.ProducerClass,
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<DealerPagedResult> GetDealersPagedAsync(int page, int pageSize, string? search, string? status, string? province, string? sortBy, string? sortDir)
+    {
+        var dbQuery = unifiDb.Dealers
+            .AsNoTracking()
+            .Where(d => d.IsDemoYN != "Y");
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var pattern = $"%{search.Trim()}%";
+            dbQuery = dbQuery.Where(d =>
+                EF.Functions.Like(d.DealerId, pattern)
+                || EF.Functions.Like(d.DBAName, pattern)
+                || (d.City != null && EF.Functions.Like(d.City, pattern))
+                || (d.ProvState != null && EF.Functions.Like(d.ProvState, pattern)));
+        }
+
+        if (!string.IsNullOrWhiteSpace(status))
+        {
+            dbQuery = dbQuery.Where(d => d.DealerStat == status.Trim());
+        }
+
+        if (!string.IsNullOrWhiteSpace(province))
+        {
+            dbQuery = dbQuery.Where(d => d.ProvState == province.Trim());
+        }
+
+        var totalCount = await dbQuery.CountAsync();
+
+        var isDesc = string.Equals(sortDir, "desc", StringComparison.OrdinalIgnoreCase);
+
+        dbQuery = (sortBy?.ToLowerInvariant()) switch
+        {
+            "name" or "dbaname" => isDesc ? dbQuery.OrderByDescending(d => d.DBAName) : dbQuery.OrderBy(d => d.DBAName),
+            "status" or "dealerstat" => isDesc ? dbQuery.OrderByDescending(d => d.DealerStat) : dbQuery.OrderBy(d => d.DealerStat),
+            "city" => isDesc ? dbQuery.OrderByDescending(d => d.City) : dbQuery.OrderBy(d => d.City),
+            "province" or "provstate" => isDesc ? dbQuery.OrderByDescending(d => d.ProvState) : dbQuery.OrderBy(d => d.ProvState),
+            _ => isDesc ? dbQuery.OrderByDescending(d => d.DealerId) : dbQuery.OrderBy(d => d.DealerId),
+        };
+
+        var items = await dbQuery
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(d => new DealerSearchResult
+            {
+                DealerId = d.DealerId,
+                DBAName = d.DBAName,
+                DealerStat = d.DealerStat,
+                City = d.City,
+                ProvState = d.ProvState,
+            })
+            .ToListAsync();
+
+        return new DealerPagedResult
+        {
+            Items = items,
+            TotalCount = totalCount,
+            Page = page,
+            PageSize = pageSize,
+            HasMore = page * pageSize < totalCount,
+        };
+    }
 }
