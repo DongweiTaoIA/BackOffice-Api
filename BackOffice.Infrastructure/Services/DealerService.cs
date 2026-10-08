@@ -28,6 +28,7 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
         }
 
         result.DealerName = dealer.DBAName;
+        result.DealerStatus = dealer.DealerStat;
 
         if (dealer.DealerStat != "A")
         {
@@ -110,6 +111,7 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
         {
             DealerCode = dealer.DealerId,
             DealerName = dealer.DBAName,
+            DealerStatus = dealer.DealerStat,
         };
 
         if (dealer.DealerStat != "A")
@@ -163,6 +165,30 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
         }
 
         result.Product = query.ProductName ?? query.ProductId ?? productId;
+        result.ProductId = productId;
+
+        // Resolve the user-supplied program (by id or name) up front so the
+        // response always carries ProgramId / ProgramName when the query
+        // referenced a specific program — even if the dealer turns out not
+        // to be enrolled for the product at all.
+        var programLookup = (query.ProgramId ?? query.ProgramName)?.Trim();
+        if (!string.IsNullOrEmpty(programLookup))
+        {
+            var resolvedProgram = await unifiDb.Programs.AsNoTracking()
+                .Where(p => p.ProgramId == programLookup || p.DescnEn == programLookup || p.DescnEn.Contains(programLookup))
+                .Select(p => new { p.ProgramId, p.DescnEn })
+                .FirstOrDefaultAsync();
+            if (resolvedProgram != null)
+            {
+                result.ProgramId = resolvedProgram.ProgramId;
+                result.ProgramName = resolvedProgram.DescnEn;
+            }
+            else
+            {
+                result.ProgramId = query.ProgramId;
+                result.ProgramName = query.ProgramName;
+            }
+        }
 
         var programs = await GetDealerProgramsAsync(dealerCode, productId);
 
@@ -201,6 +227,10 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
 
             if (matchedProgram != null)
             {
+                // The enrolled program is authoritative — override anything we
+                // populated upfront from the cfProgram lookup.
+                result.ProgramId = matchedProgram.Code;
+                result.ProgramName = matchedProgram.Name;
                 result.IsEligible = true;
                 result.Programs = [matchedProgram];
                 result.Summary = $"Dealer {dealer.DealerId} ({dealer.DBAName}) CAN sell {result.Product} under program {matchedProgram.Code} ({matchedProgram.Name}).";
@@ -249,6 +279,7 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
                 {
                     Code = p.ProgramId,
                     Name = p.DescnEn,
+                    NameFr = p.DescnFr,
                     Status = "Active"
                 }
             ).ToListAsync();
@@ -263,6 +294,7 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
             {
                 Code = p.ProgramId,
                 Name = p.DescnEn,
+                NameFr = p.DescnFr,
                 Status = "Active"
             })
             .ToListAsync();
@@ -340,7 +372,9 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
             DlrPortalYN = "Y",
             AdminDBYN = "Y",
             EffectDt = effectiveDate,
-            ExpiryDt = new DateTime(2099, 12, 31),
+            ExpiryDt = new DateTime(9999, 12, 31),
+            ModLoginId = "SXR",
+            ModDtTime = DateTime.Now
         };
 
         unifiDb.EwDealerPrograms.Add(newEntry);
@@ -376,7 +410,7 @@ public class DealerService(UnifiDbContext unifiDb, IProductRegistry productRegis
         if (program == null)
             return new ProgramActionResult { Success = false, Summary = $"Program {request.ProgramId} was not found." };
 
-        var expiryDate = DateTime.Parse(request.ExpiryDate);
+        var expiryDate = DateTime.Parse(request.ExpiryDate).AddDays(-1);
 
         // Find active enrollment
         var existing = await unifiDb.EwDealerPrograms

@@ -35,4 +35,11 @@ public class EwDealerProgram
 
     [Column("ExpiryDt")]
     public DateTime ExpiryDt { get; set; }
+
+    [Column("ModLoginId")]
+    [StringLength(50)]
+    public string ModLoginId { get; set; } = string.Empty;
+
+    [Column("ModDtTime")]
+    public DateTime ModDtTime { get; set; }
 }

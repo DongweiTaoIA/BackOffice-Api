@@ -19,6 +19,12 @@ public class ChatContext
 
     /// <summary>Specific program code (e.g., "AU220") if the user referenced one.</summary>
     public string? ProgramCode { get; init; }
+
+    /// <summary>
+    /// Detected language of the user's message ("en" or "fr"). Defaults to "en".
+    /// Used by handlers to select localized response text and suggestion labels.
+    /// </summary>
+    public string Language { get; init; } = LanguageDetector.English;
 }
 
 /// <summary>The structured response produced by an intent handler.</summary>

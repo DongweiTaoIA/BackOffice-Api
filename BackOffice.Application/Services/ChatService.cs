@@ -54,7 +54,7 @@ public class ChatService : IChatService
             _logger.LogError(ex, "Handler {Handler} failed", handler.GetType().Name);
             response = new ChatResponse
             {
-                Content = "Something went wrong while processing your request. Please try again."
+                Content = ChatLocalizer.GenericError(context.Language)
             };
         }
 
@@ -75,6 +75,7 @@ public class ChatService : IChatService
         var dealerCode = ExtractDealerCode(message);
         var productToken = ExtractProductToken(message);
         var resolvedProduct = _productRegistry.ResolveProduct(productToken);
+        var language = LanguageDetector.Detect(message);
 
         // Detect if the user specified a program (by code or name) after the product
         string? programCode = null;
@@ -96,6 +97,7 @@ public class ChatService : IChatService
             DealerCode = dealerCode,
             Product = resolvedProduct,
             ProgramCode = programCode,
+            Language = language,
         };
     }
 

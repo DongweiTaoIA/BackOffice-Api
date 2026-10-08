@@ -92,11 +92,15 @@ builder.Services.AddDbContext<BackOfficeAdminDbContext>(options =>
 builder.Services.AddDbContext<UnifiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UnifiDb")));
 builder.Services.AddSingleton<IProductRegistry, ProductRegistry>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IDealerService, DealerService>();
 builder.Services.AddScoped<IContractService, ContractService>();
+builder.Services.AddScoped<IClaimService, ClaimService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 // Chat intent handlers � register new capabilities here. FallbackIntentHandler must be last.
 builder.Services.AddScoped<IChatIntentHandler, EligibilityIntentHandler>();
+builder.Services.AddScoped<IChatIntentHandler, DealerLookupIntentHandler>();
 builder.Services.AddScoped<IChatIntentHandler, FallbackIntentHandler>();
 
 builder.Services.AddScoped<IChatService, ChatService>();

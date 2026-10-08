@@ -10,6 +10,21 @@ namespace BackOffice.Api.Controllers;
 [Authorize]
 public class ContractsController(IContractService contractService) : ControllerBase
 {
+    [HttpGet]
+    public async Task<ActionResult<ContractPagedResult>> GetContracts(
+        [FromQuery] int page = 1,
+        [FromQuery] int pageSize = 50,
+        [FromQuery] string? search = null,
+        [FromQuery] string? status = null,
+        [FromQuery] string? product = null,
+        [FromQuery] string? dealerId = null,
+        [FromQuery] string? sortBy = null,
+        [FromQuery] string? sortDir = null)
+    {
+        var result = await contractService.GetContractsPagedAsync(page, pageSize, search, status, product, dealerId, sortBy, sortDir);
+        return Ok(result);
+    }
+
     [HttpGet("search")]
     public async Task<ActionResult<List<ContractSearchResult>>> Search([FromQuery] string q = "")
     {
@@ -32,138 +47,56 @@ public class ContractsController(IContractService contractService) : ControllerB
     }
 
     [HttpGet("{contractId}/status")]
-    public ActionResult<ContractStatusDto> GetStatus(string contractId)
+    public async Task<ActionResult<ContractStatusDto>> GetStatus(string contractId)
     {
         if (string.IsNullOrWhiteSpace(contractId))
         {
             return BadRequest(new { error = "contractId is required." });
         }
 
-        var normalized = contractId.Trim();
-        var status = normalized.EndsWith("6", StringComparison.OrdinalIgnoreCase)
-            ? "Pending Approval"
-            : "Active";
+        var status = await contractService.GetContractStatusAsync(contractId.Trim());
 
-        return Ok(new ContractStatusDto
-        {
-            ContractId = normalized,
-            Status = status,
-            Owner = "Demo Contract Team",
-            Product = "Dealer Protection Plan",
-            EffectiveDate = "2026-01-01",
-            LastUpdated = DateTime.UtcNow,
-            Source = "mock-api"
-        });
+        if (status == null)
+            return NotFound(new { error = $"Contract '{contractId}' was not found." });
+
+        return Ok(status);
     }
 
     [HttpGet("{contractNum}/cancellation-eligibility")]
-    public ActionResult<CancellationEligibilityResult> CheckCancellationEligibility(string contractNum)
+    public async Task<ActionResult<CancellationEligibilityResult>> CheckCancellationEligibility(
+        string contractNum,
+        [FromQuery] string? cancDt = null,
+        [FromQuery] string? ruleId = null,
+        [FromQuery] string? cancType = null,
+        [FromQuery] string? lang = null,
+        [FromQuery] string? userId = null)
     {
         if (string.IsNullOrWhiteSpace(contractNum))
         {
             return BadRequest(new { error = "contractNum is required." });
         }
 
-        var normalized = contractNum.Trim().ToUpperInvariant();
-
-        // Mock logic: determine contract state based on contract number patterns
-        var contractStatus = GetMockContractStatus(normalized);
-        var effectiveDate = GetMockEffectiveDate(normalized);
-        var expiryDate = effectiveDate.AddYears(3);
-        var product = GetMockProduct(normalized);
-
-        var result = new CancellationEligibilityResult
+        DateTime cancellationDate;
+        if (string.IsNullOrWhiteSpace(cancDt))
         {
-            ContractNumber = normalized,
-            Status = contractStatus,
-            Product = product,
-            EffectiveDate = effectiveDate.ToString("yyyy-MM-dd"),
-            ExpiryDate = expiryDate.ToString("yyyy-MM-dd"),
-        };
-
-        // Cancellation rules
-        if (contractStatus == "Cancelled")
-        {
-            result.IsEligible = false;
-            result.Reason = "Contract has already been cancelled.";
-            result.Summary = $"Contract {normalized} is NOT eligible for cancellation. It has already been cancelled.";
+            cancellationDate = DateTime.Today;
         }
-        else if (contractStatus == "Expired")
+        else if (!DateTime.TryParse(cancDt, out cancellationDate))
         {
-            result.IsEligible = false;
-            result.Reason = "Contract has expired.";
-            result.Summary = $"Contract {normalized} is NOT eligible for cancellation. The contract expired on {result.ExpiryDate}.";
+            return BadRequest(new { error = $"cancDt '{cancDt}' is not a valid date." });
         }
-        else if (contractStatus == "Pending")
-        {
-            result.IsEligible = true;
-            result.Reason = "Contract is pending and can be cancelled with full refund.";
-            result.RefundAmount = 100.00m;
-            result.RefundType = "Full Refund";
-            result.Summary = $"Contract {normalized} IS eligible for cancellation. Status: Pending. A full refund will be issued.";
-        }
-        else // Active
-        {
-            var daysSinceEffective = (DateTime.Today - effectiveDate).Days;
 
-            if (daysSinceEffective <= 30)
-            {
-                result.IsEligible = true;
-                result.Reason = "Within 30-day free-look period. Full refund available.";
-                result.RefundAmount = 100.00m;
-                result.RefundType = "Full Refund";
-                result.Summary = $"Contract {normalized} IS eligible for cancellation. Within the 30-day free-look period. Full refund will be issued.";
-            }
-            else
-            {
-                var totalDays = (expiryDate - effectiveDate).Days;
-                var remainingDays = (expiryDate - DateTime.Today).Days;
-                var proRatedPercent = Math.Round((decimal)remainingDays / totalDays * 100, 1);
+        var result = await contractService.CheckCancellationEligibilityAsync(
+            contractNum.Trim(),
+            cancellationDate,
+            ruleId,
+            cancType,
+            lang,
+            userId);
 
-                result.IsEligible = true;
-                result.Reason = $"Active contract past free-look period. Pro-rated refund of {proRatedPercent}% available.";
-                result.RefundAmount = proRatedPercent;
-                result.RefundType = "Pro-Rated";
-                result.Summary = $"Contract {normalized} IS eligible for cancellation. Pro-rated refund of {proRatedPercent}% will be calculated based on remaining coverage.";
-            }
-        }
+        if (result == null)
+            return NotFound(new { error = $"Contract '{contractNum}' was not found." });
 
         return Ok(result);
     }
-
-    private static string GetMockContractStatus(string contractNum)
-    {
-        if (contractNum.EndsWith("0")) return "Cancelled";
-        if (contractNum.EndsWith("9")) return "Expired";
-        if (contractNum.EndsWith("8")) return "Pending";
-        return "Active";
-    }
-
-    private static DateTime GetMockEffectiveDate(string contractNum)
-    {
-        // Contracts ending in 1-3: recent (within 30 days)
-        if (contractNum.EndsWith("1") || contractNum.EndsWith("2") || contractNum.EndsWith("3"))
-            return DateTime.Today.AddDays(-15);
-        // Others: older contracts
-        return DateTime.Today.AddDays(-180);
-    }
-
-    private static string GetMockProduct(string contractNum)
-    {
-        if (contractNum.StartsWith("EW") || contractNum.StartsWith("AU")) return "Extended Warranty";
-        if (contractNum.StartsWith("DW")) return "Dealer Warranty";
-        if (contractNum.StartsWith("GP")) return "GAP Premium";
-        return "Extended Warranty";
-    }
-}
-
-public class ContractStatusDto
-{
-    public string ContractId { get; set; } = string.Empty;
-    public string Status { get; set; } = string.Empty;
-    public string Owner { get; set; } = string.Empty;
-    public string Product { get; set; } = string.Empty;
-    public string EffectiveDate { get; set; } = string.Empty;
-    public DateTime LastUpdated { get; set; }
-    public string Source { get; set; } = "mock-api";
 }
